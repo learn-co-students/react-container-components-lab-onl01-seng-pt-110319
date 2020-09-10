@@ -4,7 +4,7 @@ import MovieReviews from './MovieReviews'
 
 const NYT_API_KEY = 'dGpQ5OmGP2SgfvZimlpCUoF4iOag9qzZ';
 const URL = 'https://api.nytimes.com/svc/movies/v2/reviews/search.json?'
-            + `api-key=${NYT_API_KEY}`;
+            + `api-key=${NYT_API_KEY}?query=`;
 
 class SearchableMovieReviewsContainer extends Component {
 
@@ -21,6 +21,7 @@ class SearchableMovieReviewsContainer extends Component {
     fetch(URL.concat(this.state.searchTerm))
     .then(resp => resp.json())
     .then(data => this.setState({ reviews: data.results}))
+    .then(data => console.log('response', data))
     .catch(error => {
       console.error('Error for animal search - no result found:', error)
     })
@@ -31,7 +32,7 @@ class SearchableMovieReviewsContainer extends Component {
       <div className="searchable-movie-reviews">
         <form onSubmit={this.handleSubmit}>
           <input type="text" onChange={this.handleSearch} placeholder="Search Movie Reviews" />
-          <button type="submit">Search</button>
+          <input type="submit" />
         </form>
         <MovieReviews reviews={this.state.reviews} />
       </div>
